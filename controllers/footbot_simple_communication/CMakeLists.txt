@@ -1,0 +1,5 @@
+add_library(footbot_simple_communication SHARED footbot_simple_communication.h footbot_simple_communication.cpp)
+target_link_libraries(footbot_simple_communication
+  argos3core_simulator
+  argos3plugin_simulator_footbot
+  argos3plugin_simulator_genericrobot)
