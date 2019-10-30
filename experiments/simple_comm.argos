@@ -17,7 +17,7 @@
   <controllers>
 
     <footbot_simple_communication_controller id="fscc"
-                                  library="build/controllers/footbot_simple_communication/libfootbot_simple_communication.so">
+                                  library="build/controllers/footbot_simple_communication/libfootbot_simple_communication">
       <actuators>
         <range_and_bearing implementation="default" />
       </actuators>
