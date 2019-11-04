@@ -71,6 +71,16 @@ public:
     */
    virtual void Destroy() {}
 
+   /*
+    * Callback for get clock
+    */
+   unsigned char get_footbot_clock();
+
+   /*
+    * Callback for get rand
+    */
+   unsigned char get_footbot_rand();
+
 private:
 
    /* Pointer to the LEDs actuator */

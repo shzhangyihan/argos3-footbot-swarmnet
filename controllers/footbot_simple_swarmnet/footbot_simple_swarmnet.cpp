@@ -27,16 +27,26 @@ void CFootBotSimpleSwarmnet::Init(TConfigurationNode& t_node) {
 
       my_id = uint8_t(255 * m_pcRNG->Uniform(ProbRange));
       my_clock = 0;
-      printf("buf size = %d\n", m_pcRABA->GetSize());
-      printf("id = %d\n", my_id);
-      m_pcRABA->SetData(0, my_id);
-      m_pcRABA->SetData(1, my_clock);
+      // printf("buf size = %d\n", m_pcRABA->GetSize());
+      // printf("id = %d\n", my_id);
+      // m_pcRABA->SetData(0, my_id);
+      // m_pcRABA->SetData(1, my_clock);
    }
    catch(CARGoSException& ex) {
       THROW_ARGOSEXCEPTION_NESTED("Error initializing the foot-bot foraging controller for robot \"" << GetId() << "\"", ex);
    }
    footbot_driver = new my_footboot();
-   footbot_driver->setup();
+   footbot_driver->register_footbot_clock(std::bind(&CFootBotSimpleSwarmnet::get_footbot_clock, this));
+   footbot_driver->register_footbot_rand(std::bind(&CFootBotSimpleSwarmnet::get_footbot_rand, this));
+   footbot_driver->driver_setup();
+}
+
+unsigned char CFootBotSimpleSwarmnet::get_footbot_clock() {
+   return my_clock;
+}
+
+unsigned char CFootBotSimpleSwarmnet::get_footbot_rand() {
+   return (unsigned char)(255 * m_pcRNG->Uniform(ProbRange));;
 }
 
 /****************************************/
@@ -54,7 +64,6 @@ void CFootBotSimpleSwarmnet::ControlStep() {
    // else m_pcLEDs->SetAllColors(CColor(0, 255, 0));
 
    /* fetch new packet */
-   printf("before loop\n");
    unsigned char pkt[PKT_SIZE];
    int ret = footbot_driver->next_pkt(pkt);
 
