@@ -26,6 +26,10 @@ class my_footbot_driver_interface {
          return ret;
       }
 
+      void recv_pkt(unsigned char * pkt_array, size_t size, Meta_t * meta) {
+         swarmnet->receive(pkt_array, size, meta);
+      }
+
       unsigned int get_clock() {
          return get_footbot_clock();
       }
@@ -65,7 +69,7 @@ void sent_callback() {
 
 void recv_callback(unsigned char * msg, int size, int ttl, Meta_t * meta) {
    state_t * recv_state = (state_t *) msg;
-   printf("%d recv with id %d\n", my_state.id, recv_state->id);
+   printf("%d recv with id %d from dist %d\n", my_state.id, recv_state->id, meta->dist);
 }
 
 void loop() {

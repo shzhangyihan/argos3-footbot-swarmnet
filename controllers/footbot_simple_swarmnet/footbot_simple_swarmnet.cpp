@@ -29,8 +29,8 @@ void CFootBotSimpleSwarmnet::Init(TConfigurationNode& t_node) {
       my_clock = 0;
       // printf("buf size = %d\n", m_pcRABA->GetSize());
       // printf("id = %d\n", my_id);
-      // m_pcRABA->SetData(0, my_id);
-      // m_pcRABA->SetData(1, my_clock);
+      m_pcRABA->SetData(0, my_id);
+      m_pcRABA->SetData(1, my_clock);
    }
    catch(CARGoSException& ex) {
       THROW_ARGOSEXCEPTION_NESTED("Error initializing the foot-bot foraging controller for robot \"" << GetId() << "\"", ex);
@@ -53,7 +53,6 @@ unsigned char CFootBotSimpleSwarmnet::get_footbot_rand() {
 /****************************************/
 
 void CFootBotSimpleSwarmnet::ControlStep() {
-   const CCI_RangeAndBearingSensor::TReadings& tPackets = m_pcRABS->GetReadings();
    // printf("%d recved: [", my_id);
    // for(size_t i = 0; i < tPackets.size(); ++i) {
    //    printf("%d ", tPackets[i].Data[1]);
@@ -62,16 +61,31 @@ void CFootBotSimpleSwarmnet::ControlStep() {
    // m_pcRABA->SetData(1, my_clock);
    // if(my_clock % 10 == 0) m_pcLEDs->SetAllColors(CColor(255, 0, 0));
    // else m_pcLEDs->SetAllColors(CColor(0, 255, 0));
+   // printf("%d recved: [", my_id);
+   // for(size_t i = 0; i < tPackets.size(); ++i) {
+   //    printf("(recv id %d range %f), ", tPackets[i].Data[0], tPackets[i].Range);
+   // }
+   // printf("]\n");
 
    /* fetch new packet */
    unsigned char pkt[PKT_SIZE];
    int ret = footbot_driver->next_pkt(pkt);
-
-   for(int i = 0; i < ret; i ++) {
+   for(size_t i = 0; i < ret; i ++) {
       m_pcRABA->SetData(i, pkt[i]);
    }
-   /* receive all incoming packets */
 
+   /* receive all incoming packets */
+   const CCI_RangeAndBearingSensor::TReadings& tPackets = m_pcRABS->GetReadings();
+   unsigned char recv_pkt[PKT_SIZE];
+   for(size_t i = 0; i < tPackets.size(); ++i) {
+      for(size_t j = 0; j < PKT_SIZE; j++) {
+         recv_pkt[j] = tPackets[i].Data[j];
+      }
+      Meta_t meta;
+      meta.dist = (int) tPackets[i].Range;
+      footbot_driver->recv_pkt(recv_pkt, PKT_SIZE, &meta);
+      // printf("(recv id %d range %f), ", tPackets[i].Data[0], tPackets[i].Range);
+   }
    /* run control loop */
    footbot_driver->loop();
    my_clock++;
