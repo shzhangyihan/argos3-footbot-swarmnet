@@ -20,6 +20,7 @@
                                   library="build/controllers/footbot_simple_communication/libfootbot_simple_communication.so">
       <actuators>
         <range_and_bearing implementation="default" />
+        <leds implementation="default" medium="leds" />
       </actuators>
       <sensors>
         <range_and_bearing implementation="medium" medium="rab" />
@@ -53,10 +54,10 @@
     <distribute>
       <position method="grid"
                 center="0,0,0"
-                distances="0.3,0.3,0"
-                layout="4,4,1" />
+                distances="0.2,0.2,0"
+                layout="6,6,1" />
       <orientation method="constant" values="0,0,0" />
-      <entity quantity="16" max_trials="1">
+      <entity quantity="36" max_trials="1">
         <foot-bot id="fb">
           <controller config="fscc" />
         </foot-bot>

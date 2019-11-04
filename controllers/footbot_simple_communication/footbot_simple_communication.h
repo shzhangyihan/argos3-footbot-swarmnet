@@ -14,6 +14,8 @@
 #include <argos3/plugins/robots/generic/control_interface/ci_range_and_bearing_actuator.h>
 /* Definition of the range and bearing sensor */
 #include <argos3/plugins/robots/generic/control_interface/ci_range_and_bearing_sensor.h>
+/* Definition of the LEDs actuator */
+#include <argos3/plugins/robots/generic/control_interface/ci_leds_actuator.h>
 /* Definitions for random number generation */
 #include <argos3/core/utility/math/rng.h>
 
@@ -69,6 +71,8 @@ public:
 
 private:
 
+   /* Pointer to the LEDs actuator */
+   CCI_LEDsActuator* m_pcLEDs;
    /* Pointer to the range and bearing actuator */
    CCI_RangeAndBearingActuator*  m_pcRABA;
    /* Pointer to the range and bearing sensor */
@@ -78,7 +82,9 @@ private:
    /* The random number generator */
    CRandom::CRNG* m_pcRNG;
    /* random id */
-   int my_id;
+   uint8_t my_id;
+   /* loop clock */
+   uint16_t my_clock;
 };
 
 #endif
