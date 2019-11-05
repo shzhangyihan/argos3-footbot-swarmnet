@@ -2,3 +2,4 @@ include_directories(${CMAKE_SOURCE_DIR}/controllers)
 
 add_subdirectory(footbot_simple_communication)
 add_subdirectory(footbot_simple_swarmnet)
+add_subdirectory(footbot_sn_firefly)

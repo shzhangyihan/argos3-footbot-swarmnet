@@ -1,0 +1,2 @@
+add_subdirectory(swarmnet)
+add_subdirectory(swarmos)

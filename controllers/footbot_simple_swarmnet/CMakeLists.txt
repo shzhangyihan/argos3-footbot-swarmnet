@@ -5,5 +5,3 @@ target_link_libraries(footbot_simple_swarmnet
   argos3plugin_simulator_genericrobot
   swarmnet
   swarmos)
-add_subdirectory(swarmnet)
-add_subdirectory(swarmos)

@@ -16,8 +16,8 @@
   <!-- *************** -->
   <controllers>
 
-    <footbot_simple_swarmnet_controller id="fssc"
-                                  library="build/controllers/footbot_simple_swarmnet/libfootbot_simple_swarmnet">
+    <footbot_firefly_controller id="ffc"
+                                  library="build/controllers/footbot_sn_firefly/libfootbot_sn_firefly">
       <actuators>
         <range_and_bearing implementation="default" />
         <leds implementation="default" medium="leds" />
@@ -27,7 +27,7 @@
         <range_and_bearing implementation="medium" medium="rab" />
       </sensors>
       <params />
-    </footbot_simple_swarmnet_controller>
+    </footbot_firefly_controller>
 
   </controllers>
 
@@ -58,9 +58,9 @@
                 distances="0.2,0.2,0"
                 layout="6,6,1" />
       <orientation method="constant" values="0,0,0" />
-      <entity quantity="3" max_trials="1">
+      <entity quantity="2" max_trials="1">
         <foot-bot id="fb">
-          <controller config="fssc" />
+          <controller config="ffc" />
         </foot-bot>
       </entity>
     </distribute>
