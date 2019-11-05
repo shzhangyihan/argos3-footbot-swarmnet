@@ -19,7 +19,7 @@
 /* Definitions for random number generation */
 #include <argos3/core/utility/math/rng.h>
 /* Include driver interface class */
-#include "user_program.h"
+#include "footbot_sn_driver.h"
 
 /*
  * All the ARGoS stuff in the 'argos' namespace.
