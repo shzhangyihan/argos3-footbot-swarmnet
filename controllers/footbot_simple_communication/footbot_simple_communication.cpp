@@ -23,6 +23,7 @@ void CFootBotSimpleCommunication::Init(TConfigurationNode& t_node) {
       m_pcRABA      = GetActuator<CCI_RangeAndBearingActuator     >("range_and_bearing"    );
       m_pcRABS      = GetSensor  <CCI_RangeAndBearingSensor       >("range_and_bearing"    );
       m_pcLEDs      = GetActuator<CCI_LEDsActuator                >("leds"                 );
+      m_pcWheels    = GetActuator<CCI_DifferentialSteeringActuator>("differential_steering");
       m_pcRNG = CRandom::CreateRNG("argos");
 
       my_id = uint8_t(255 * m_pcRNG->Uniform(ProbRange));
@@ -35,6 +36,7 @@ void CFootBotSimpleCommunication::Init(TConfigurationNode& t_node) {
    catch(CARGoSException& ex) {
       THROW_ARGOSEXCEPTION_NESTED("Error initializing the foot-bot foraging controller for robot \"" << GetId() << "\"", ex);
    }
+   m_pcWheels->SetLinearVelocity(0, 10);
 }
 
 /****************************************/

@@ -23,6 +23,7 @@ void CFootBotSimpleSwarmnet::Init(TConfigurationNode& t_node) {
       m_pcRABA      = GetActuator<CCI_RangeAndBearingActuator     >("range_and_bearing"    );
       m_pcRABS      = GetSensor  <CCI_RangeAndBearingSensor       >("range_and_bearing"    );
       m_pcLEDs      = GetActuator<CCI_LEDsActuator                >("leds"                 );
+      m_pcWheels    = GetActuator<CCI_DifferentialSteeringActuator>("differential_steering");
       m_pcRNG = CRandom::CreateRNG("argos");
 
       my_id = uint8_t(255 * m_pcRNG->Uniform(ProbRange));
@@ -47,6 +48,19 @@ unsigned char CFootBotSimpleSwarmnet::get_footbot_clock() {
 
 unsigned char CFootBotSimpleSwarmnet::get_footbot_rand() {
    return (unsigned char)(255 * m_pcRNG->Uniform(ProbRange));;
+}
+
+void CFootBotSimpleSwarmnet::set_LED(uint8_t r, uint8_t g, uint8_t b) {
+   m_pcLEDs->SetAllColors(CColor(r, g, b));
+}
+
+void CFootBotSimpleSwarmnet::set_motor(int left, int right) {
+   /*
+    * Forward 10 10
+    * Left 0 10
+    * Right 10 0
+    */
+   m_pcWheels->SetLinearVelocity(left, right);
 }
 
 /****************************************/
@@ -84,7 +98,6 @@ void CFootBotSimpleSwarmnet::ControlStep() {
       Meta_t meta;
       meta.dist = (int) tPackets[i].Range;
       footbot_driver->recv_pkt(recv_pkt, PKT_SIZE, &meta);
-      // printf("(recv id %d range %f), ", tPackets[i].Data[0], tPackets[i].Range);
    }
    /* run control loop */
    footbot_driver->loop();

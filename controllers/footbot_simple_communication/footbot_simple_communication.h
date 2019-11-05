@@ -70,7 +70,8 @@ public:
    virtual void Destroy() {}
 
 private:
-
+   /* Pointer to the differential steering actuator */
+   CCI_DifferentialSteeringActuator* m_pcWheels;
    /* Pointer to the LEDs actuator */
    CCI_LEDsActuator* m_pcLEDs;
    /* Pointer to the range and bearing actuator */

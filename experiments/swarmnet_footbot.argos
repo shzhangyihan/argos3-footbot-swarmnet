@@ -21,6 +21,7 @@
       <actuators>
         <range_and_bearing implementation="default" />
         <leds implementation="default" medium="leds" />
+        <differential_steering implementation="default" />
       </actuators>
       <sensors>
         <range_and_bearing implementation="medium" medium="rab" />

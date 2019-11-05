@@ -81,8 +81,20 @@ public:
     */
    unsigned char get_footbot_rand();
 
-private:
+   /*
+    * Callback for set LED
+    */
+   void set_LED(uint8_t r, uint8_t g, uint8_t b);
 
+   /*
+    * Callback for set motor
+    */
+   void set_motor(int left, int right);
+
+
+private:
+   /* Pointer to the differential steering actuator */
+   CCI_DifferentialSteeringActuator* m_pcWheels;
    /* Pointer to the LEDs actuator */
    CCI_LEDsActuator* m_pcLEDs;
    /* Pointer to the range and bearing actuator */
