@@ -71,18 +71,18 @@ class my_footbot_driver_interface {
       My_control_factory my_control_factory;
       virtual void loop() = 0;
       virtual void setup() = 0;
-      std::function<unsigned int ()> get_footbot_clock;
+      std::function<uint16_t ()> get_footbot_clock;
       std::function<unsigned int ()> get_footbot_rand;
       std::function<void (uint8_t, uint8_t, uint8_t)> set_footbot_LED;
       std::function<void (int, int)> set_footbot_motor;
 
-      void register_footbot_clock(std::function<unsigned int ()> get_footbot_clock);
+      void register_footbot_clock(std::function<uint16_t ()> get_footbot_clock);
       void register_footbot_rand(std::function<unsigned int ()> get_footbot_rand);
       void register_footbot_set_LED(std::function<void (uint8_t, uint8_t, uint8_t)> set_footbot_LED);
       void register_footbot_set_motor(std::function<void (int, int)> set_footbot_motor);
       int next_pkt(unsigned char * pkt_array);
       void recv_pkt(unsigned char * pkt_array, size_t size, Meta_t * meta);
-      unsigned int get_clock();
+      uint16_t get_clock();
       unsigned int custom_rand();
       void driver_loop();
       void driver_setup();

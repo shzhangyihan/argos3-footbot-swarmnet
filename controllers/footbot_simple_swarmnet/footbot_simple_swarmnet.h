@@ -74,7 +74,7 @@ public:
    /*
     * Callback for get clock
     */
-   unsigned char get_footbot_clock();
+   uint16_t get_footbot_clock();
 
    /*
     * Callback for get rand

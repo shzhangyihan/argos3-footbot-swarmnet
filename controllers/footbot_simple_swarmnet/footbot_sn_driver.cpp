@@ -150,7 +150,7 @@ My_control_factory::~My_control_factory() { }
  * actual footbot swarmnet driver interface
  */
 
-void my_footbot_driver_interface::register_footbot_clock(std::function<unsigned int ()> get_footbot_clock) {
+void my_footbot_driver_interface::register_footbot_clock(std::function<uint16_t ()> get_footbot_clock) {
     this->get_footbot_clock = get_footbot_clock;
 }
 
@@ -175,7 +175,7 @@ void my_footbot_driver_interface::recv_pkt(unsigned char * pkt_array, size_t siz
     swarmnet->receive(pkt_array, size, meta);
 }
 
-unsigned int my_footbot_driver_interface::get_clock() {
+uint16_t my_footbot_driver_interface::get_clock() {
     return get_footbot_clock();
 }
 

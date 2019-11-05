@@ -44,7 +44,7 @@ void CFootBotSimpleSwarmnet::Init(TConfigurationNode& t_node) {
    footbot_driver->driver_setup();
 }
 
-unsigned char CFootBotSimpleSwarmnet::get_footbot_clock() {
+uint16_t CFootBotSimpleSwarmnet::get_footbot_clock() {
    return my_clock;
 }
 
