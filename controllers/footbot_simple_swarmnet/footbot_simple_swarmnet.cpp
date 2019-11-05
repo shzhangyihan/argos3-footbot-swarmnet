@@ -39,6 +39,8 @@ void CFootBotSimpleSwarmnet::Init(TConfigurationNode& t_node) {
    footbot_driver = new my_footboot();
    footbot_driver->register_footbot_clock(std::bind(&CFootBotSimpleSwarmnet::get_footbot_clock, this));
    footbot_driver->register_footbot_rand(std::bind(&CFootBotSimpleSwarmnet::get_footbot_rand, this));
+   footbot_driver->register_footbot_set_LED(std::bind(&CFootBotSimpleSwarmnet::set_LED, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
+   footbot_driver->register_footbot_set_motor(std::bind(&CFootBotSimpleSwarmnet::set_motor, this, std::placeholders::_1, std::placeholders::_2));
    footbot_driver->driver_setup();
 }
 
@@ -100,7 +102,7 @@ void CFootBotSimpleSwarmnet::ControlStep() {
       footbot_driver->recv_pkt(recv_pkt, PKT_SIZE, &meta);
    }
    /* run control loop */
-   footbot_driver->loop();
+   footbot_driver->driver_loop();
    my_clock++;
 }
 

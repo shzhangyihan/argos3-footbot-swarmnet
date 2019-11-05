@@ -21,7 +21,7 @@ void Motor_control_unit::move_forward(unsigned long time) {
     this->start_time = (this->common_sys)->get_clock();
     this->status = Move_forward;
     this->time_left = time;
-    ((my_footbot_driver_interface *)(this->this_robot))->set_footbot_motor(10, 10);
+    ((my_footbot_driver_interface *)(this->this_robot))->set_footbot_motor(2, 2);
 }
 
 void Motor_control_unit::turn_left(unsigned long time) {
@@ -29,7 +29,7 @@ void Motor_control_unit::turn_left(unsigned long time) {
     this->start_time = this->common_sys->get_clock();
     this->status = Turn_left;
     this->time_left = time;
-    ((my_footbot_driver_interface *)(this->this_robot))->set_footbot_motor(0, 10);
+    ((my_footbot_driver_interface *)(this->this_robot))->set_footbot_motor(0, 2);
 }
 
 void Motor_control_unit::turn_right(unsigned long time) {
@@ -37,7 +37,7 @@ void Motor_control_unit::turn_right(unsigned long time) {
     this->start_time = this->common_sys->get_clock();
     this->status = Turn_right;
     this->time_left = time;
-    ((my_footbot_driver_interface *)(this->this_robot))->set_footbot_motor(10, 0);
+    ((my_footbot_driver_interface *)(this->this_robot))->set_footbot_motor(2, 0);
 }
 
 void Motor_control_unit::stop_motor() {

@@ -1,34 +1,38 @@
 START_USER_PROGRAM
 
-typedef struct state {
-    int id;
-} state_t;
-
-Channel * channel;
-Publisher * publisher;
-Subscriber * subscriber;
-state_t my_state;
-
-void sent_callback() {
-   printf("%d sent\n", my_state.id);
-   publisher->send((unsigned char *) &my_state, sizeof(my_state));
-}
-
-void recv_callback(unsigned char * msg, int size, int ttl, Meta_t * meta) {
-   state_t * recv_state = (state_t *) msg;
-   printf("%d recv with id %d from dist %d\n", my_state.id, recv_state->id, meta->dist);
-}
+int motor_state;
 
 void loop() {
-   // publisher->send((unsigned char *) &my_state, sizeof(my_state));
+    if(motor_control->current_status() == Stop) {
+        if(motor_state == 0) {
+            motor_control->turn_right(50);
+            LED_control->turn_on(0, 255, 0, 50);
+            motor_state = 1;
+            printf("switch from left to forward\n");
+        }
+        else if(motor_state == 1) {
+            motor_control->move_forward(50);
+            LED_control->turn_on(255, 255, 255, 50);
+            motor_state = 2;
+            printf("switch from forward to right\n");
+        }
+        else if(motor_state == 2) {
+            motor_control->turn_left(50);
+            LED_control->turn_on(255, 0, 0, 50);
+            motor_state = 3;
+            printf("switch from right to forward\n");
+        }
+        else if(motor_state == 3) {
+            motor_control->move_forward(50);
+            LED_control->turn_on(255, 255, 255, 50);
+            motor_state = 0;
+            printf("switch from forward to left\n");
+        }
+    }
 }
 
 void setup() {
-    channel = swarmnet->new_channel(0, 0, true);
-    publisher = channel->new_publisher(sent_callback);
-    subscriber = channel->new_subscriber(200, recv_callback);
-    my_state.id = swarmos.random_func();
-    publisher->send((unsigned char *) &my_state, sizeof(my_state));
+    motor_state = 0;
 }
 
 END_USER_PROGRAM
