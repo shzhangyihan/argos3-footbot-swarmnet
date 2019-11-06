@@ -15,9 +15,8 @@
   <!-- * Controllers * -->
   <!-- *************** -->
   <controllers>
-
-    <footbot_firefly_controller id="ffc"
-                                  library="build/controllers/footbot_sn_firefly/libfootbot_sn_firefly">
+      <footbot_sn_hop_follower id="fhf"
+                                  library="build/controllers/footbot_sn_hop_follower/libfootbot_sn_hop_follower">
       <actuators>
         <range_and_bearing implementation="default" />
         <leds implementation="default" medium="leds" />
@@ -27,7 +26,33 @@
         <range_and_bearing implementation="medium" medium="rab" />
       </sensors>
       <params />
-    </footbot_firefly_controller>
+    </footbot_sn_hop_follower>
+
+    <footbot_sn_hop_seed_1 id="fhs1"
+                                  library="build/controllers/footbot_sn_hop_seed_1/libfootbot_sn_hop_seed_1">
+      <actuators>
+        <range_and_bearing implementation="default" />
+        <leds implementation="default" medium="leds" />
+        <differential_steering implementation="default" />
+      </actuators>
+      <sensors>
+        <range_and_bearing implementation="medium" medium="rab" />
+      </sensors>
+      <params />
+    </footbot_sn_hop_seed_1>
+
+    <footbot_sn_hop_seed_2 id="fhs2"
+                                  library="build/controllers/footbot_sn_hop_seed_2/libfootbot_sn_hop_seed_2">
+      <actuators>
+        <range_and_bearing implementation="default" />
+        <leds implementation="default" medium="leds" />
+        <differential_steering implementation="default" />
+      </actuators>
+      <sensors>
+        <range_and_bearing implementation="medium" medium="rab" />
+      </sensors>
+      <params />
+    </footbot_sn_hop_seed_2>
 
   </controllers>
 
@@ -56,14 +81,19 @@
       <position method="grid"
                 center="0,0,0"
                 distances="0.18,0.18,0"
-                layout="6,6,1" />
+                layout="4,4,1" />
       <orientation method="constant" values="0,0,0" />
-      <entity quantity="36" max_trials="1">
+      <entity quantity="16" max_trials="1">
         <foot-bot id="fb">
-          <controller config="ffc" />
+          <controller config="fhf" />
         </foot-bot>
       </entity>
     </distribute>
+
+    <foot-bot id="fbs_1">
+      <body position="0.4,0.4,0" orientation="0,0,0" />
+      <controller config="fhs1"/>
+    </foot-bot>
 
   </arena>
 

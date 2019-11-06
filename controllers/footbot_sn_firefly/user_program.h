@@ -5,8 +5,8 @@ START_USER_PROGRAM
 
 #define DEFAULT_PERIOD 150
 #define LED_DURATION 2
-#define TIMER_CHANGE_BOUND 10
-#define NORMALIZE_FACTOR 20
+#define TIMER_CHANGE_BOUND 20
+#define NORMALIZE_FACTOR 200
 
 typedef struct state {
     int period_length;
@@ -19,7 +19,7 @@ state_t my_state;
 int last_rest;
 
 void sent_callback() {
-    printf("sent\n");
+    // printf("sent\n");
 }
 
 void recv_callback(unsigned char * msg, int size, int ttl, Meta_t * meta) {
@@ -29,7 +29,7 @@ void recv_callback(unsigned char * msg, int size, int ttl, Meta_t * meta) {
     if(my_time < 0) {
         my_time = DEFAULT_PERIOD + my_time;
     }
-    printf("my_time = %d last_rest = %d delay = %d\n", my_time, last_rest, meta->msg_delay);
+    // printf("my_time = %d last_rest = %d delay = %d\n", my_time, last_rest, meta->msg_delay);
     if(my_time < (my_state.period_length / 2))
         my_state.period_length = my_state.period_length + my_time / NORMALIZE_FACTOR;
     else
@@ -46,7 +46,7 @@ void loop() {
         LED_control->turn_on(255, 255, 255, LED_DURATION);
         publisher->send((unsigned char *) &my_state, sizeof(my_state));
         last_rest = swarmos.get_clock();
-        printf("%d\n", my_state.period_length);
+        // printf("%d\n", my_state.period_length);
         my_state.period_length = DEFAULT_PERIOD;
     }
     if(LED_control->current_status() == Off) {
