@@ -1,6 +1,7 @@
 #include "packet.h"
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 Packet::Packet() {
     this->valid = false;
@@ -139,7 +140,7 @@ void Packet::decrease_hop() {
 
 void Packet::set_time_bytes(unsigned int time) {
     // clear the potential dirty bits
-    time = time & (~(~(0U) << TIMER_BITS));
+    time = time & (unsigned int)(long(pow(2, TIMER_BITS)) - 1);
     #if WITH_CRC
     memcpy(this->content + (PKT_SIZE - HEADER_BYTE - CRC_BYTE - TIMER_BYTE), &time, TIMER_BYTE);
     #else
@@ -190,7 +191,8 @@ unsigned int Packet::get_time_bytes() {
     memcpy(&ret, this->content + (PKT_SIZE - HEADER_BYTE - TIMER_BYTE), TIMER_BYTE);
     #endif
     // clear the potential dirty bits
-    ret = ret & (~(~(0U) << TIMER_BITS));
+    // ret = ret & (~(~(0U) << TIMER_BITS));
+    ret = ret & (unsigned int)(long(pow(2, TIMER_BITS)) - 1);
     SWARM_LOG("Get timer: %d", ret);
     return ret;
 }
