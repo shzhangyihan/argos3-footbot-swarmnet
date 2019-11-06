@@ -57,7 +57,7 @@ void loop() {
 void setup() {
     channel = swarmnet->new_channel(0, 0, true);
     publisher = channel->new_publisher(sent_callback);
-    subscriber = channel->new_subscriber(200, recv_callback);
+    subscriber = channel->new_subscriber(300, recv_callback);
 
     // my_state.period_length = DEFAULT_PERIOD;
     my_state.period_length = swarmos.random_func() % DEFAULT_PERIOD;
