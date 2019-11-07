@@ -27,9 +27,6 @@
  */
 using namespace argos;
 
-#define FOOTBOT_CLASS_MACRO CFootBotHopFollower
-#define FOOTBOT_CONTROLLER_MACRO "footbot_sn_hop_follower"
-
 /*
  * A controller is simply an implementation of the CCI_Controller class.
  */

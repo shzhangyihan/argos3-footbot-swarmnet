@@ -1,5 +1,5 @@
-#ifndef FOOTBOT_SN_HOP_SEED_1_H
-#define FOOTBOT_SN_HOP_SEED_1_H
+#ifndef FOOTBOT_SN_EDGE_SEED_H
+#define FOOTBOT_SN_EDGE_SEED_H
 
 /*
  * Include some necessary headers.

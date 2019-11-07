@@ -44,11 +44,11 @@ void CFootBotSimpleCommunication::Init(TConfigurationNode& t_node) {
 
 void CFootBotSimpleCommunication::ControlStep() {
    const CCI_RangeAndBearingSensor::TReadings& tPackets = m_pcRABS->GetReadings();
-   // printf("%d recved: [", my_id);
-   // for(size_t i = 0; i < tPackets.size(); ++i) {
-   //    printf("%d ", tPackets[i].Data[1]);
-   // }
-   // printf("]\n");
+   printf("%d recved: [", my_id);
+   for(size_t i = 0; i < tPackets.size(); ++i) {
+      printf("%d ", tPackets[i].Data[0]);
+   }
+   printf("]\n");
    // m_pcRABA->SetData(1, my_clock);
    // if(my_clock % 10 == 0) m_pcLEDs->SetAllColors(CColor(255, 0, 0));
    // else m_pcLEDs->SetAllColors(CColor(0, 255, 0));

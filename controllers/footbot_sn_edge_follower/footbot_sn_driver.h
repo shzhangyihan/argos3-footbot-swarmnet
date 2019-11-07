@@ -4,9 +4,9 @@
 #include "../../swarmnet_plugin/swarmos/swarmos.h"
 #include <functional>
 
-#define FOOTBOT_CLASS_MACRO CFootBotHopSeed1
-#define FOOTBOT_CONTROLLER_MACRO "footbot_sn_hop_seed_1"
-#define CLASS my_footboot_hop_seed_1
+#define FOOTBOT_CLASS_MACRO CFootBotEdgeFollower
+#define FOOTBOT_CONTROLLER_MACRO "footbot_sn_edge_follower"
+#define CLASS my_footboot_edge_follower
 
 #define NUM_OF_CONTROL_UNITS 2
 

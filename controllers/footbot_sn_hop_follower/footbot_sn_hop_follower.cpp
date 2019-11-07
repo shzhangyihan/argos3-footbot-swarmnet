@@ -36,7 +36,7 @@ void FOOTBOT_CLASS_MACRO::Init(TConfigurationNode& t_node) {
    catch(CARGoSException& ex) {
       THROW_ARGOSEXCEPTION_NESTED("Error initializing the foot-bot foraging controller for robot \"" << GetId() << "\"", ex);
    }
-   footbot_driver = new my_footboot();
+   footbot_driver = new CLASS();
    footbot_driver->register_footbot_clock(std::bind(&FOOTBOT_CLASS_MACRO::get_footbot_clock, this));
    footbot_driver->register_footbot_rand(std::bind(&FOOTBOT_CLASS_MACRO::get_footbot_rand, this));
    footbot_driver->register_footbot_set_LED(std::bind(&FOOTBOT_CLASS_MACRO::set_LED, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));

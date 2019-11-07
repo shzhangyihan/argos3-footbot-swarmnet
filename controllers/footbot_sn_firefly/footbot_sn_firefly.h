@@ -27,9 +27,6 @@
  */
 using namespace argos;
 
-#define FOOTBOT_CLASS_MACRO CFootBotFirefly
-#define FOOTBOT_CONTROLLER_MACRO "footbot_firefly_controller"
-
 /*
  * A controller is simply an implementation of the CCI_Controller class.
  */

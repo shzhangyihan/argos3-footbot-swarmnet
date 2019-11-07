@@ -44,7 +44,7 @@ void sent_callback_channel_2() {
 void recv_callback_channel_1(unsigned char * msg, int size, int ttl, Meta_t * meta) {
     // 
 	custom_message_t * received_msg = (custom_message_t *) msg;
-    printf("recv 1 - hop: %d dist: %d\r\n", received_msg->hop, meta->dist);
+    // printf("recv 1 - hop: %d dist: %d\r\n", received_msg->hop, meta->dist);
     if(received_msg->hop < period_min_hop_from_seed_1) {
         period_min_hop_from_seed_1 = received_msg->hop;
     }
@@ -52,7 +52,7 @@ void recv_callback_channel_1(unsigned char * msg, int size, int ttl, Meta_t * me
 
 void recv_callback_channel_2(unsigned char * msg, int size, int ttl, Meta_t * meta) {
 	custom_message_t * received_msg = (custom_message_t *) msg;
-    printf("recv 2 - hop: %d dist: %d\r\n", received_msg->hop, meta->dist);
+    // printf("recv 2 - hop: %d dist: %d\r\n", received_msg->hop, meta->dist);
     if(received_msg->hop < period_min_hop_from_seed_2) {
         period_min_hop_from_seed_2 = received_msg->hop;
     }
@@ -84,6 +84,7 @@ void loop() {
     //         LED_flag = 0;
     //     }
     // }
+    printf("hop 1: %d hop 2: %d\r\n", hop_from_seed_1, hop_from_seed_2);
     int r = hop_from_seed_1 % 2;
     int g = hop_from_seed_2 % 2;
     int b = (r == 0 && g == 0) ? 1: 0;

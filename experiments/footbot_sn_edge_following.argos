@@ -15,8 +15,8 @@
   <!-- * Controllers * -->
   <!-- *************** -->
   <controllers>
-      <footbot_sn_hop_follower id="fhf"
-                                  library="build/controllers/footbot_sn_hop_follower/libfootbot_sn_hop_follower">
+      <footbot_sn_edge_follower id="fsef"
+                                  library="build/controllers/footbot_sn_edge_follower/libfootbot_sn_edge_follower">
       <actuators>
         <range_and_bearing implementation="default" />
         <leds implementation="default" medium="leds" />
@@ -26,10 +26,10 @@
         <range_and_bearing implementation="medium" medium="rab" />
       </sensors>
       <params />
-    </footbot_sn_hop_follower>
+    </footbot_sn_edge_follower>
 
-    <footbot_sn_hop_seed_1 id="fhs1"
-                                  library="build/controllers/footbot_sn_hop_seed_1/libfootbot_sn_hop_seed_1">
+    <footbot_sn_edge_seed id="fses"
+                                  library="build/controllers/footbot_sn_edge_seed/libfootbot_sn_edge_seed">
       <actuators>
         <range_and_bearing implementation="default" />
         <leds implementation="default" medium="leds" />
@@ -39,20 +39,7 @@
         <range_and_bearing implementation="medium" medium="rab" />
       </sensors>
       <params />
-    </footbot_sn_hop_seed_1>
-
-    <footbot_sn_hop_seed_2 id="fhs2"
-                                  library="build/controllers/footbot_sn_hop_seed_2/libfootbot_sn_hop_seed_2">
-      <actuators>
-        <range_and_bearing implementation="default" />
-        <leds implementation="default" medium="leds" />
-        <differential_steering implementation="default" />
-      </actuators>
-      <sensors>
-        <range_and_bearing implementation="medium" medium="rab" />
-      </sensors>
-      <params />
-    </footbot_sn_hop_seed_2>
+    </footbot_sn_edge_seed>
 
   </controllers>
 
@@ -77,53 +64,35 @@
     <!--
        Distribute 16 entities in a 4x4 grid on the ground,
        all facing along the X axis -->
-    <distribute>
-      <position method="grid"
-                center="0,0,0"
-                distances="0.18,0.18,0"
-                layout="5,5,1" />
-      <orientation method="constant" values="0,0,0" />
-      <entity quantity="25" max_trials="1">
-        <foot-bot id="fba">
-          <controller config="fhf" />
-        </foot-bot>
-      </entity>
-    </distribute>
 
-    <distribute>
-      <position method="grid"
-                center="-0.54,0,0"
-                distances="0.18,0.18,0"
-                layout="1,5,1" />
-      <orientation method="constant" values="0,0,0" />
-      <entity quantity="5" max_trials="1">
-        <foot-bot id="fbb">
-          <controller config="fhf" />
-        </foot-bot>
-      </entity>
-    </distribute>
-
-    <distribute>
-      <position method="grid"
-                center="-0.09,0.54,0"
-                distances="0.18,0.18,0"
-                layout="4,1,1" />
-      <orientation method="constant" values="0,0,0" />
-      <entity quantity="4" max_trials="1">
-        <foot-bot id="fbc">
-          <controller config="fhf" />
-        </foot-bot>
-      </entity>
-    </distribute>
-
-    <foot-bot id="fbs_1">
-      <body position="0.356,0.54,0" orientation="0,0,0" />
-      <controller config="fhs1"/>
+    <foot-bot id="fses1">
+      <body position="0.15,0,0" orientation="0,0,0" />
+      <controller config="fses"/>
     </foot-bot>
 
-    <foot-bot id="fbs_2">
-      <body position="-0.54,0.54,0" orientation="0,0,0" />
-      <controller config="fhs2"/>
+    <foot-bot id="fses2">
+      <body position="-0.15,0,0" orientation="0,0,0" />
+      <controller config="fses"/>
+    </foot-bot>
+
+    <foot-bot id="fses3">
+      <body position="0,0.15,0" orientation="0,0,0" />
+      <controller config="fses"/>
+    </foot-bot>
+
+    <foot-bot id="fses4">
+      <body position="0,-0.15,0" orientation="0,0,0" />
+      <controller config="fses"/>
+    </foot-bot>
+
+    <foot-bot id="fsef1">
+      <body position="0,0.65,0" orientation="0,0,0" />
+      <controller config="fsef"/>
+    </foot-bot>
+
+    <foot-bot id="fsef2">
+      <body position="-0.65,0,0" orientation="90,0,0" />
+      <controller config="fsef"/>
     </foot-bot>
 
   </arena>

@@ -1,5 +1,5 @@
 /* Include the controller definition */
-#include "footbot_sn_firefly.h"
+#include "footbot_sn_edge_follower.h"
 /* Function definitions for XML parsing */
 #include <argos3/core/utility/configuration/argos_configuration.h>
 

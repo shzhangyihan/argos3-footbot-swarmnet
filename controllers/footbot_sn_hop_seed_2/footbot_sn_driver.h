@@ -4,6 +4,10 @@
 #include "../../swarmnet_plugin/swarmos/swarmos.h"
 #include <functional>
 
+#define FOOTBOT_CLASS_MACRO CFootBotHopSeed2
+#define FOOTBOT_CONTROLLER_MACRO "footbot_sn_hop_seed_2"
+#define CLASS my_footboot_hop_seed_2
+
 #define NUM_OF_CONTROL_UNITS 2
 
 enum enumType {Stop, Move_forward, Turn_left, Turn_right, On, Off};
@@ -88,10 +92,8 @@ class my_footbot_driver_interface {
       void driver_setup();
 };
 
-
-#define START_USER_PROGRAM class my_footboot: public my_footbot_driver_interface {
+#define START_USER_PROGRAM class CLASS: public my_footbot_driver_interface {
 #define END_USER_PROGRAM   };
-#define CLASS my_footboot
 #define new_publisher(func) new_publisher(std::bind(&CLASS::func, this))
 #define new_subscriber(dist, func) new_subscriber(dist, std::bind(&CLASS::func, this, \
                                                   std::placeholders::_1, \
