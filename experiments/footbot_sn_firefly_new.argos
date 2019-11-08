@@ -16,8 +16,8 @@
   <!-- *************** -->
   <controllers>
 
-    <footbot_firefly_controller id="ffc"
-                                  library="build/controllers/footbot_sn_firefly/libfootbot_sn_firefly">
+    <footbot_firefly_controller_new id="ffc"
+                                  library="build/controllers/footbot_sn_firefly_new/libfootbot_sn_firefly_new">
       <actuators>
         <range_and_bearing implementation="default" />
         <leds implementation="default" medium="leds" />
@@ -27,7 +27,7 @@
         <range_and_bearing implementation="medium" medium="rab" />
       </sensors>
       <params />
-    </footbot_firefly_controller>
+    </footbot_firefly_controller_new>
 
   </controllers>
 

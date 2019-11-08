@@ -1,12 +1,13 @@
 #pragma once
 #include <math.h>
+#include <unistd.h>
 
 START_USER_PROGRAM
 
-#define DEFAULT_PERIOD 150
-#define LED_DURATION 2
-#define TIMER_CHANGE_BOUND 20
-#define NORMALIZE_FACTOR 200
+#define DEFAULT_PERIOD 120
+#define LED_DURATION 5
+#define TIMER_CHANGE_BOUND 300
+#define NORMALIZE_FACTOR 0.05
 
 typedef struct state {
     int period_length;
@@ -17,52 +18,55 @@ Publisher * publisher;
 Subscriber * subscriber;
 state_t my_state;
 int last_rest;
+FILE *f;
+float period;
 
 void sent_callback() {
-    // printf("sent\n");
+
 }
 
 void recv_callback(unsigned char * msg, int size, int ttl, Meta_t * meta) {
-    // subtracting the queueing delay
-    // here my_time is the time when the sender called send function
-    int my_time = swarmos.get_clock() - last_rest - meta->msg_delay;
+    int my_time = swarmos.get_clock() - last_rest;
     if(my_time < 0) {
         my_time = DEFAULT_PERIOD + my_time;
     }
-    // printf("my_time = %d last_rest = %d delay = %d\n", my_time, last_rest, meta->msg_delay);
+    if(my_time < 0 || my_time > period) {return;}
+    float step = NORMALIZE_FACTOR * (1 + (swarmos.random_func() % 3) / 5.0);
     if(my_time < (my_state.period_length / 2))
-        my_state.period_length = my_state.period_length + my_time / NORMALIZE_FACTOR;
+        period = period + (my_time * step);
     else
-        my_state.period_length = my_state.period_length - (my_state.period_length - my_time) / NORMALIZE_FACTOR;
-    
-    if(my_state.period_length < DEFAULT_PERIOD - TIMER_CHANGE_BOUND)
-        my_state.period_length = DEFAULT_PERIOD - TIMER_CHANGE_BOUND;
-    if(my_state.period_length > DEFAULT_PERIOD + TIMER_CHANGE_BOUND)
-        my_state.period_length = DEFAULT_PERIOD + TIMER_CHANGE_BOUND;
+        period = period - ((period - my_time) * step);
+    if(period < DEFAULT_PERIOD - TIMER_CHANGE_BOUND) {
+        period = period - TIMER_CHANGE_BOUND;
+    }
+    if(period > DEFAULT_PERIOD + TIMER_CHANGE_BOUND) {
+        period = period + TIMER_CHANGE_BOUND;
+    }
 }
 
 void loop() {
-    if(swarmos.get_clock() - last_rest > my_state.period_length) {
+      if(swarmos.get_clock() - last_rest > period) {
         LED_control->turn_on(255, 255, 255, LED_DURATION);
         publisher->send((unsigned char *) &my_state, sizeof(my_state));
         last_rest = swarmos.get_clock();
-        // printf("%d\n", my_state.period_length);
         my_state.period_length = DEFAULT_PERIOD;
+	    period = DEFAULT_PERIOD;
     }
-    if(LED_control->current_status() == Off) {
-        LED_control->turn_on(0, 0, 255, 10000);
-    }
+    // else if(swarmos.get_clock() - last_rest > 10) {
+    //     python_set_color(0, 0, 0);
+    // }
+    // else {
+    // }
 }
 
 void setup() {
     channel = swarmnet->new_channel(0, 0, true);
     publisher = channel->new_publisher(sent_callback);
-    subscriber = channel->new_subscriber(300, recv_callback);
+    subscriber = channel->new_subscriber(150, recv_callback);
 
-    // my_state.period_length = DEFAULT_PERIOD;
-    my_state.period_length = swarmos.random_func() % DEFAULT_PERIOD;
+    my_state.period_length = swarmos.random_func() % (DEFAULT_PERIOD + TIMER_CHANGE_BOUND);
+    period = fmod(1.0 * swarmos.random_func(), 1.0 * (DEFAULT_PERIOD));
     last_rest = swarmos.get_clock();
-    LED_control->turn_on(0, 0, 255, 10000);
 }
 
 END_USER_PROGRAM

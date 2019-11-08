@@ -22,7 +22,7 @@ void loop() {
 
 void setup() {
     my_message.hop = 0;
-    channel_seed_1 = swarmnet->new_channel(1, 0, false);
+    channel_seed_1 = swarmnet->new_channel(1, 2, false);
     publisher = channel_seed_1->new_publisher(sent);
     publisher->send((unsigned char *) &my_message, sizeof(my_message));
     LED_control->turn_on(255, 255, 255, LED_DURATION);

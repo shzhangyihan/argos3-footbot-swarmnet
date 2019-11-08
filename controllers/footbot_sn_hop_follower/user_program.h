@@ -101,8 +101,8 @@ void setup() {
     my_message_channel_1.hop = hop_from_seed_1;
     my_message_channel_2.hop = hop_from_seed_2;
 
-    channel_seed_1 = swarmnet->new_channel(1, 0, false);
-    channel_seed_2 = swarmnet->new_channel(2, 0, false);
+    channel_seed_1 = swarmnet->new_channel(1, 2, false);
+    channel_seed_2 = swarmnet->new_channel(2, 2, false);
 
     publisher_channel_1 = channel_seed_1->new_publisher(sent_callback_channel_1);
     publisher_channel_2 = channel_seed_2->new_publisher(sent_callback_channel_2);
