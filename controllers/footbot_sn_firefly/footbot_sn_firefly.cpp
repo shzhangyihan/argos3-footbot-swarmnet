@@ -27,7 +27,7 @@ void FOOTBOT_CLASS_MACRO::Init(TConfigurationNode& t_node) {
       m_pcRNG = CRandom::CreateRNG("argos");
 
       my_id = uint8_t(255 * m_pcRNG->Uniform(ProbRange));
-      my_clock = 0;
+      my_clock = ((int)(255 * m_pcRNG->Uniform(ProbRange))) % 255;
       // printf("buf size = %d\n", m_pcRABA->GetSize());
       // printf("id = %d\n", my_id);
       m_pcRABA->SetData(0, my_id);

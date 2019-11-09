@@ -7,7 +7,7 @@ START_USER_PROGRAM
 #define DEFAULT_PERIOD 120
 #define LED_DURATION 5
 #define TIMER_CHANGE_BOUND 300
-#define NORMALIZE_FACTOR 0.05
+#define NORMALIZE_FACTOR 0.2
 
 typedef struct state {
     int period_length;
@@ -26,7 +26,8 @@ void sent_callback() {
 }
 
 void recv_callback(unsigned char * msg, int size, int ttl, Meta_t * meta) {
-    int my_time = swarmos.get_clock() - last_rest;
+    int my_time = swarmos.get_clock() - last_rest - meta->msg_delay;
+    // LED_control->turn_on(255, 0, 0, 1);
     if(my_time < 0) {
         my_time = DEFAULT_PERIOD + my_time;
     }
